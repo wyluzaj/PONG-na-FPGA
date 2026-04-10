@@ -25,7 +25,7 @@ use ieee.numeric_std.all;
 
 entity freq_divider is
     generic (
-        CLK_FREQ_HZ  : integer := 100_000_000;
+        CLK_FREQ_HZ  : integer := 25_000_000;
         TICK_FREQ_HZ : integer := 60
     );
     port (

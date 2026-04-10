@@ -7,7 +7,7 @@ set_property IOSTANDARD LVDS [get_ports CLK_100MHz_*]
 create_clock -period 10.000 -name Clk_100MHz [get_ports CLK_100MHz_P]
 
 ### Pushbutton Switches (4 inputs)
-set_property PACKAGE_PIN AB6 [get_ports {PL_USER_PB[0]}]
+set_property PACKAGE_PIN AB6 [get_ports {PL_USER_PB_0}]
 set_property PACKAGE_PIN AB7 [get_ports {PL_USER_PB[1]}]
 set_property PACKAGE_PIN AB2 [get_ports {PL_USER_PB[2]}]
 set_property PACKAGE_PIN AC6 [get_ports {PL_USER_PB[3]}]
