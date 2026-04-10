@@ -1,0 +1,19 @@
+# Ignoruj logi i pliki dziennika Vivado
+*.jou
+*.log
+*.str
+*.pb
+*.wdb
+
+# Ignoruj foldery robocze i tymczasowe
+.Xil/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+*.sim/
+
+# Zignoruj backupy i pliki tymczasowe systemu operacyjnego
+*.backup.*
+*~
+.DS_Store
