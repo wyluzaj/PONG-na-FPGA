@@ -1,17 +1,14 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity ResetCombiner is
+entity ResetPhysical is
     port (
         ClkLocked : in  std_logic;
-        PL_USER_PB_0 : in  std_logic;
-        RstN      : out std_logic
+        ResetN      : out std_logic
     );
 end entity;
 
-architecture rtl of ResetCombiner is
+architecture rtl of ResetPhysical is
 begin
-    -- reset aktywny niski:
-    -- gdy Clock Wizard nie jest locked albo przycisk wciśnięty -> reset aktywny
-    RstN <= ClkLocked and (not PL_USER_PB_0);
+    ResetN <= ClkLocked;
 end architecture;
