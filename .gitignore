@@ -1,19 +1,22 @@
-# Ignoruj logi i pliki dziennika Vivado
-*.jou
-*.log
-*.str
-*.pb
-*.wdb
+# 1. Ignoruj absolutnie wszystko
+*
 
-# Ignoruj foldery robocze i tymczasowe
-.Xil/
+# 2. Pozwól Gitowi wchodzić do folderów
+!*/
+
+# 3. Zezwól na niezbędne pliki źródłowe i projektowe
+!*.vhd
+!*.xpr
+!*.xdc
+!*.bd
+!*.xci
+!.gitignore
+
+# 4. BEZWZGLĘDNIE ignoruj foldery robocze i generowane przez Vivado
 *.cache/
-*.hw/
-*.ip_user_files/
 *.runs/
 *.sim/
-
-# Zignoruj backupy i pliki tymczasowe systemu operacyjnego
-*.backup.*
-*~
-.DS_Store
+*.gen/
+*.ip_user_files/
+*.hw/
+.Xil/
