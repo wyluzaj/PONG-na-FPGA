@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x85BF6C716C9337F1",
+      "boundary_crc": "0xAA7EEADE999AF24E",
       "device": "xczu3eg-sfvc784-2-e",
       "gen_directory": "../../../../pong.gen/sources_1/bd/design_2",
       "name": "design_2",
@@ -51,37 +51,37 @@
       }
     },
     "ports": {
-      "PL_USER_PB_0_0": {
+      "PL_USER_PB_0": {
         "direction": "I"
       },
-      "ROT_A_0": {
+      "ROT_A": {
         "direction": "I"
       },
-      "ROT_B_0": {
+      "ROT_B": {
         "direction": "I"
       },
-      "HDMI_D0_P_0": {
+      "HDMI_D0_P": {
         "direction": "O"
       },
-      "HDMI_D0_N_0": {
+      "HDMI_D0_N": {
         "direction": "O"
       },
-      "HDMI_CK_N_0": {
+      "HDMI_CK_N": {
         "direction": "O"
       },
-      "HDMI_CK_P_0": {
+      "HDMI_CK_P": {
         "direction": "O"
       },
-      "HDMI_D2_N_0": {
+      "HDMI_D2_N": {
         "direction": "O"
       },
-      "HDMI_D2_P_0": {
+      "HDMI_D2_P": {
         "direction": "O"
       },
-      "HDMI_D1_N_0": {
+      "HDMI_D1_N": {
         "direction": "O"
       },
-      "HDMI_D1_P_0": {
+      "HDMI_D1_P": {
         "direction": "O"
       }
     },
@@ -301,56 +301,56 @@
     "nets": {
       "GameReset_0_1": {
         "ports": [
-          "PL_USER_PB_0_0",
+          "PL_USER_PB_0",
           "PongImgGen_0/GameReset"
         ]
       },
       "HDMI_TX_0_HDMI_CK_N": {
         "ports": [
           "HDMI_TX_0/HDMI_CK_N",
-          "HDMI_CK_N_0"
+          "HDMI_CK_N"
         ]
       },
       "HDMI_TX_0_HDMI_CK_P": {
         "ports": [
           "HDMI_TX_0/HDMI_CK_P",
-          "HDMI_CK_P_0"
+          "HDMI_CK_P"
         ]
       },
       "HDMI_TX_0_HDMI_D0_N": {
         "ports": [
           "HDMI_TX_0/HDMI_D0_N",
-          "HDMI_D0_N_0"
+          "HDMI_D0_N"
         ]
       },
       "HDMI_TX_0_HDMI_D0_P": {
         "ports": [
           "HDMI_TX_0/HDMI_D0_P",
-          "HDMI_D0_P_0"
+          "HDMI_D0_P"
         ]
       },
       "HDMI_TX_0_HDMI_D1_N": {
         "ports": [
           "HDMI_TX_0/HDMI_D1_N",
-          "HDMI_D1_N_0"
+          "HDMI_D1_N"
         ]
       },
       "HDMI_TX_0_HDMI_D1_P": {
         "ports": [
           "HDMI_TX_0/HDMI_D1_P",
-          "HDMI_D1_P_0"
+          "HDMI_D1_P"
         ]
       },
       "HDMI_TX_0_HDMI_D2_N": {
         "ports": [
           "HDMI_TX_0/HDMI_D2_N",
-          "HDMI_D2_N_0"
+          "HDMI_D2_N"
         ]
       },
       "HDMI_TX_0_HDMI_D2_P": {
         "ports": [
           "HDMI_TX_0/HDMI_D2_P",
-          "HDMI_D2_P_0"
+          "HDMI_D2_P"
         ]
       },
       "Net": {
@@ -380,13 +380,13 @@
       },
       "ROT_A_0_1": {
         "ports": [
-          "ROT_A_0",
+          "ROT_A",
           "RotaryEnc_0/ROT_A"
         ]
       },
       "ROT_B_0_1": {
         "ports": [
-          "ROT_B_0",
+          "ROT_B",
           "RotaryEnc_0/ROT_B"
         ]
       },
@@ -445,8 +445,8 @@
         "ports": [
           "clk_wiz_0/locked",
           "HDMI_TX_0/ResetN",
-          "PongImgGen_0/ResetN",
-          "VideoTiming_0/ResetN"
+          "VideoTiming_0/ResetN",
+          "PongImgGen_0/ResetN"
         ]
       }
     }

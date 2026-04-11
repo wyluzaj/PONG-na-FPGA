@@ -2,7 +2,7 @@
 --Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
---Date        : Sat Apr 11 01:15:16 2026
+--Date        : Sat Apr 11 13:17:01 2026
 --Host        : dell16 running 64-bit major release  (build 9200)
 --Command     : generate_target design_2.bd
 --Design      : design_2
@@ -14,17 +14,17 @@ library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
 entity design_2 is
   port (
-    HDMI_CK_N_0 : out STD_LOGIC;
-    HDMI_CK_P_0 : out STD_LOGIC;
-    HDMI_D0_N_0 : out STD_LOGIC;
-    HDMI_D0_P_0 : out STD_LOGIC;
-    HDMI_D1_N_0 : out STD_LOGIC;
-    HDMI_D1_P_0 : out STD_LOGIC;
-    HDMI_D2_N_0 : out STD_LOGIC;
-    HDMI_D2_P_0 : out STD_LOGIC;
-    PL_USER_PB_0_0 : in STD_LOGIC;
-    ROT_A_0 : in STD_LOGIC;
-    ROT_B_0 : in STD_LOGIC;
+    HDMI_CK_N : out STD_LOGIC;
+    HDMI_CK_P : out STD_LOGIC;
+    HDMI_D0_N : out STD_LOGIC;
+    HDMI_D0_P : out STD_LOGIC;
+    HDMI_D1_N : out STD_LOGIC;
+    HDMI_D1_P : out STD_LOGIC;
+    HDMI_D2_N : out STD_LOGIC;
+    HDMI_D2_P : out STD_LOGIC;
+    PL_USER_PB_0 : in STD_LOGIC;
+    ROT_A : in STD_LOGIC;
+    ROT_B : in STD_LOGIC;
     clk_100mhz_clk_n : in STD_LOGIC;
     clk_100mhz_clk_p : in STD_LOGIC
   );
@@ -127,14 +127,14 @@ HDMI_TX_0: component design_2_HDMI_TX_0_0
       B(7 downto 0) => PongImgGen_0_B(7 downto 0),
       DE => Net,
       G(7 downto 0) => PongImgGen_0_G(7 downto 0),
-      HDMI_CK_N => HDMI_CK_N_0,
-      HDMI_CK_P => HDMI_CK_P_0,
-      HDMI_D0_N => HDMI_D0_N_0,
-      HDMI_D0_P => HDMI_D0_P_0,
-      HDMI_D1_N => HDMI_D1_N_0,
-      HDMI_D1_P => HDMI_D1_P_0,
-      HDMI_D2_N => HDMI_D2_N_0,
-      HDMI_D2_P => HDMI_D2_P_0,
+      HDMI_CK_N => HDMI_CK_N,
+      HDMI_CK_P => HDMI_CK_P,
+      HDMI_D0_N => HDMI_D0_N,
+      HDMI_D0_P => HDMI_D0_P,
+      HDMI_D1_N => HDMI_D1_N,
+      HDMI_D1_P => HDMI_D1_P,
+      HDMI_D2_N => HDMI_D2_N,
+      HDMI_D2_P => HDMI_D2_P,
       HSync => VideoTiming_0_HSync,
       R(7 downto 0) => PongImgGen_0_R(7 downto 0),
       ResetN => clk_wiz_0_locked,
@@ -148,7 +148,7 @@ PongImgGen_0: component design_2_PongImgGen_0_0
       Clk => clk_wiz_0_Clk_25MHz,
       DE => Net,
       G(7 downto 0) => PongImgGen_0_G(7 downto 0),
-      GameReset => PL_USER_PB_0_0,
+      GameReset => PL_USER_PB_0,
       MoveLeft => RotaryEnc_0_RotL,
       MoveRight => RotaryEnc_0_RotR,
       PosX(9 downto 0) => VideoTiming_0_PosX(9 downto 0),
@@ -159,8 +159,8 @@ PongImgGen_0: component design_2_PongImgGen_0_0
 RotaryEnc_0: component design_2_RotaryEnc_0_0
      port map (
       Clk => clk_wiz_0_Clk_25MHz,
-      ROT_A => ROT_A_0,
-      ROT_B => ROT_B_0,
+      ROT_A => ROT_A,
+      ROT_B => ROT_B,
       RotL => RotaryEnc_0_RotL,
       RotR => RotaryEnc_0_RotR
     );

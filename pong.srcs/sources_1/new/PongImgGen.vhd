@@ -6,7 +6,7 @@ entity PongImgGen is
     port (
         Clk        : in  std_logic;  -- pixel clock 25 MHz
         ResetN     : in  std_logic;  -- system reset active low
-        GameReset  : in  std_logic;  -- reset samej gry, aktywny wysoki
+        GameReset  : in  std_logic;  -- reset gry, aktywny wysoki
         MoveLeft   : in  std_logic;
         MoveRight  : in  std_logic;
         DE         : in  std_logic;  -- display enable from VideoTiming
@@ -27,6 +27,7 @@ architecture rtl of PongImgGen is
     constant CELL_W : integer := 10; -- 640 / 64
     constant CELL_H : integer := 15; -- 480 / 32
 
+    signal game_rst_s : std_logic;
     signal game_tick  : std_logic;
 
     signal ball_x_s   : integer range 0 to FIELD_W - 1;
@@ -50,6 +51,11 @@ architecture rtl of PongImgGen is
     signal inside_paddle : std_logic;
     signal inside_border : std_logic;
 begin
+    -- Wspólny reset całego podsystemu gry:
+    -- 1) brak gotowości systemu (ResetN = 0)
+    -- 2) reset z przycisku gry (GameReset = 1)
+    game_rst_s <= (not ResetN) or GameReset;
+
     px_x <= to_integer(unsigned(PosX));
     px_y <= to_integer(unsigned(PosY));
 
@@ -60,7 +66,7 @@ begin
         )
         port map (
             clk_in   => Clk,
-            reset    => '0',
+            reset    => game_rst_s,
             tick_out => game_tick
         );
 
@@ -73,7 +79,7 @@ begin
         )
         port map (
             clk        => Clk,
-            reset      => GameReset,
+            reset      => game_rst_s,
             tick       => game_tick,
             move_left  => MoveLeft,
             move_right => MoveRight,
@@ -82,11 +88,13 @@ begin
             paddle_x   => paddle_x_s
         );
 
+    -- Pozycja piłki w pikselach
     ball_left   <= ball_x_s * CELL_W;
     ball_right  <= ball_x_s * CELL_W + CELL_W - 1;
     ball_top    <= ball_y_s * CELL_H;
     ball_bottom <= ball_y_s * CELL_H + CELL_H - 1;
 
+    -- Pozycja paletki w pikselach
     pad_left    <= paddle_x_s * CELL_W;
     pad_right   <= paddle_x_s * CELL_W + PADDLE_W * CELL_W - 1;
     pad_top     <= PADDLE_Y * CELL_H;
@@ -108,23 +116,27 @@ begin
 
     process(DE, inside_ball, inside_paddle, inside_border)
     begin
+        -- tło czarne
         R <= (others => '0');
         G <= (others => '0');
         B <= (others => '0');
 
         if DE = '1' then
+            -- ramka
             if inside_border = '1' then
                 R <= x"00";
                 G <= x"20";
                 B <= x"80";
             end if;
 
+            -- paletka
             if inside_paddle = '1' then
                 R <= x"00";
                 G <= x"FF";
                 B <= x"00";
             end if;
 
+            -- piłka
             if inside_ball = '1' then
                 R <= x"FF";
                 G <= x"FF";
