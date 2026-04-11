@@ -2,7 +2,7 @@
 --Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------
 --Tool Version: Vivado v.2025.2 (win64) Build 6299465 Fri Nov 14 19:35:11 GMT 2025
---Date        : Sat Apr 11 13:17:01 2026
+--Date        : Sat Apr 11 14:44:46 2026
 --Host        : dell16 running 64-bit major release  (build 9200)
 --Command     : generate_target design_2.bd
 --Design      : design_2
@@ -29,7 +29,7 @@ entity design_2 is
     clk_100mhz_clk_p : in STD_LOGIC
   );
   attribute CORE_GENERATION_INFO : string;
-  attribute CORE_GENERATION_INFO of design_2 : entity is "design_2,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_2,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=5,numReposBlks=5,numNonXlnxBlks=2,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,synth_mode=Hierarchical}";
+  attribute CORE_GENERATION_INFO of design_2 : entity is "design_2,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_2,x_ipVersion=1.00.a,x_ipLanguage=VHDL,numBlks=5,numReposBlks=5,numNonXlnxBlks=2,numHierBlks=0,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=2,numPkgbdBlks=0,bdsource=USER,synth_mode=None}";
   attribute HW_HANDOFF : string;
   attribute HW_HANDOFF of design_2 : entity is "design_2.hwdef";
 end design_2;
@@ -96,9 +96,9 @@ architecture STRUCTURE of design_2 is
     clk_in1_p : in STD_LOGIC;
     clk_in1_n : in STD_LOGIC;
     reset : in STD_LOGIC;
-    locked : out STD_LOGIC;
     Clk_25MHz : out STD_LOGIC;
-    Clk_125MHz : out STD_LOGIC
+    Clk_125MHz : out STD_LOGIC;
+    locked : out STD_LOGIC
   );
   end component design_2_clk_wiz_0_0;
   signal Net : STD_LOGIC;

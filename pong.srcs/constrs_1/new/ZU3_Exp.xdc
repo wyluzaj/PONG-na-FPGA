@@ -50,3 +50,4 @@ set_property IOSTANDARD LVCMOS33 [get_ports HDMI_*]
 #set_property PACKAGE_PIN AF12 [get_ports {OLED_SDA}]
 #set_property IOSTANDARD LVCMOS33 [get_ports OLED_*]
 #set_property SLEW FAST [get_ports OLED_*]
+

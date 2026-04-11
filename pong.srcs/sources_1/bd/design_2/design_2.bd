@@ -6,7 +6,7 @@
       "gen_directory": "../../../../pong.gen/sources_1/bd/design_2",
       "name": "design_2",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
-      "synth_flow_mode": "Hierarchical",
+      "synth_flow_mode": "None",
       "tool_version": "2025.2",
       "validated": "true"
     },

@@ -1,9 +1,9 @@
 ########################### IO Ports ###########################
 
 #### 100MHz SYS_CLK (1V8 LVDS); NOT needed if the pins are used by the ClockingWizard IP in a block design
-#set_property PACKAGE_PIN D7  [get_ports {CLK_100MHz_P}]
-#set_property PACKAGE_PIN D6  [get_ports {CLK_100MHz_N}]
-#set_property IOSTANDARD LVDS [get_ports CLK_100MHz_*]
+set_property PACKAGE_PIN D7  [get_ports {CLK_100MHz_P}]
+set_property PACKAGE_PIN D6  [get_ports {CLK_100MHz_N}]
+set_property IOSTANDARD LVDS [get_ports CLK_100MHz_*]
 #create_clock -period 10.000 -name Clk_100MHz [get_ports CLK_100MHz_P]
 
 ### Pushbutton Switches (4 inputs)
@@ -146,3 +146,4 @@ set_property IOSTANDARD LVCMOS12 [get_ports PL_USER_PB*]
 
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 #set_property BITSTREAM.CONFIG.OVERTEMPSHUTDOWN ENABLE [current_design]
+

@@ -1,3 +1,9 @@
+-- Moduł: freq_divider
+-- Opis :
+--   Dzielnik częstotliwości generujący sygnał tick_out
+--   na podstawie zegara systemowego clk_in.
+--   Wykorzystywany np. do sterowania logiką gry (tempo animacji).
+
 library IEEE;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -15,6 +21,7 @@ entity freq_divider is
 end entity;
 
 architecture rtl of freq_divider is
+--liczby cykli zegara potrzebnych do wygenerowania jednego ticka
     constant MAX_COUNT : integer := CLK_FREQ_HZ / TICK_FREQ_HZ - 1;
     signal counter : integer range 0 to MAX_COUNT := 0;
 begin
