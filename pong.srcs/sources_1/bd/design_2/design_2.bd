@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xA53D47A6D2AA0770",
+      "boundary_crc": "0xAA7EEADE999AF24E",
       "device": "xczu3eg-sfvc784-2-e",
       "gen_directory": "../../../../pong.gen/sources_1/bd/design_2",
       "name": "design_2",
@@ -18,7 +18,7 @@
       "clk_wiz_0": ""
     },
     "interface_ports": {
-      "CLK_100MHz": {
+      "clk_100mhz": {
         "mode": "Slave",
         "vlnv_bus_definition": "xilinx.com:interface:diff_clock:1.0",
         "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0",
@@ -40,11 +40,11 @@
         },
         "port_maps": {
           "CLK_N": {
-            "physical_name": "CLK_100MHz_clk_n",
+            "physical_name": "clk_100mhz_clk_n",
             "direction": "I"
           },
           "CLK_P": {
-            "physical_name": "CLK_100MHz_clk_p",
+            "physical_name": "clk_100mhz_clk_p",
             "direction": "I"
           }
         }
@@ -293,7 +293,7 @@
     "interface_nets": {
       "CLK_IN1_D_0_1": {
         "interface_ports": [
-          "CLK_100MHz",
+          "clk_100mhz",
           "clk_wiz_0/CLK_IN1_D"
         ]
       }
