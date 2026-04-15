@@ -2,7 +2,6 @@
 -- Opis :
 --   Główna logika gry Pong.
 --   Odpowiada za ruch piłki, sterowanie paletką oraz detekcję kolizji.
-
 library IEEE;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -18,8 +17,8 @@ entity pong_core is
         clk        : in  std_logic;
         reset      : in  std_logic; -- reset gry
         tick       : in  std_logic; -- tempo animacji piłki
-        move_left  : in  std_logic; -- sygnał z enkodera
-        move_right : in  std_logic; -- sygnał z enkodera
+        move_left  : in  std_logic; -- impuls z enkodera (lewo)
+        move_right : in  std_logic; -- impuls z enkodera (prawo)
 
         ball_x     : out integer range 0 to FIELD_W-1;
         ball_y     : out integer range 0 to FIELD_H-1;
@@ -28,14 +27,20 @@ entity pong_core is
 end pong_core;
 
 architecture Behavioral of pong_core is
+    -- Rejestry pozycji
     signal ball_x_reg   : integer range 0 to FIELD_W-1 := FIELD_W/2;
     signal ball_y_reg   : integer range 0 to FIELD_H-1 := FIELD_H/2;
     signal paddle_x_reg : integer range 0 to FIELD_W-1 := (FIELD_W - PADDLE_W)/2;
 
+    -- Kierunek ruchu
     signal dx : integer range -1 to 1 := 1;
     signal dy : integer range -1 to 1 := -1;
+
+    -- Flaga stanu gry (czy piłka ma się ruszać)
+    signal game_started : std_logic := '0';
+
 begin
-    -- wystawienie wartości na porty wyjściowe
+    -- Wystawienie sygnałów na porty
     ball_x   <= ball_x_reg;
     ball_y   <= ball_y_reg;
     paddle_x <= paddle_x_reg;
@@ -53,17 +58,27 @@ begin
                 paddle_x_reg <= (FIELD_W - PADDLE_W)/2;
                 dx <= 1;
                 dy <= -1;
+                game_started <= '0'; -- Piłka stoi po resecie
             else
-                -- 1. STEROWANIE PALETKĄ (sprawdzane w każdym cyklu zegara, poza blokiem tick)
-                -- Dzięki temu nie przegapimy krótkich impulsów z enkodera
-                if move_left = '1' and paddle_x_reg > 0 then
-                    paddle_x_reg <= paddle_x_reg - 1;
-                elsif move_right = '1' and paddle_x_reg < FIELD_W - PADDLE_W then
-                    paddle_x_reg <= paddle_x_reg + 1;
+                -- 1. OBSŁUGA PALETKI (krok = 3, reaguje natychmiast)
+                if move_left = '1' then
+                    game_started <= '1'; -- Pierwszy ruch uruchamia grę
+                    if paddle_x_reg >= 3 then
+                        paddle_x_reg <= paddle_x_reg - 3;
+                    else
+                        paddle_x_reg <= 0;
+                    end if;
+                elsif move_right = '1' then
+                    game_started <= '1'; -- Pierwszy ruch uruchamia grę
+                    if paddle_x_reg <= (FIELD_W - PADDLE_W - 3) then
+                        paddle_x_reg <= paddle_x_reg + 3;
+                    else
+                        paddle_x_reg <= FIELD_W - PADDLE_W;
+                    end if;
                 end if;
 
-                -- 2. LOGIKA PIŁKI (wykonywana tylko gdy tick = '1')
-                if tick = '1' then
+                -- 2. LOGIKA PIŁKI (tylko gdy tick='1' i gra trwa)
+                if tick = '1' and game_started = '1' then
                     next_x := ball_x_reg + dx;
                     next_y := ball_y_reg + dy;
                     new_dx := dx;
@@ -81,29 +96,29 @@ begin
                         new_dy := 1;
                     end if;
 
-                    -- Kolizja z paletką
+                    -- Odbicie od paletki
                     if next_y = PADDLE_Y and dy = 1 then  
                         if next_x >= paddle_x_reg and next_x < paddle_x_reg + PADDLE_W then
                             new_dy := -1;
                         end if;
                     end if;
 
-                    -- Sprawdzenie wypadnięcia piłki (dół ekranu)
+                    -- Sprawdzenie wypadnięcia piłki (skucha)
                     if next_y >= FIELD_H - 1 then
-                        ball_x_reg <= FIELD_W/2;
-                        ball_y_reg <= FIELD_H/2;
-                        dx <= 1;
-                        dy <= -1;
+                        ball_x_reg   <= FIELD_W/2;
+                        ball_y_reg   <= FIELD_H/2;
+                        dx           <= 1;
+                        dy           <= -1;
+                        game_started <= '0'; -- Zatrzymaj piłkę po skusze
                     else
-                        -- Aktualizacja stanu piłki
                         ball_x_reg <= ball_x_reg + new_dx;
                         ball_y_reg <= ball_y_reg + new_dy;
                         dx <= new_dx;
                         dy <= new_dy;
                     end if;
-                end if; -- koniec bloku tick
-            end if; -- koniec bloku reset
-        end if; -- koniec rising_edge
+                end if;
+            end if;
+        end if;
     end process;
 
 end Behavioral;

@@ -72,7 +72,7 @@ begin
     u_div : entity work.freq_divider -- instancja dzielnika częstotliwości sterującego tempem gry
         generic map (
             CLK_FREQ_HZ  => 25_000_000,
-            TICK_FREQ_HZ => 60
+            TICK_FREQ_HZ => 30
         )
         port map (
             clk_in   => Clk,
