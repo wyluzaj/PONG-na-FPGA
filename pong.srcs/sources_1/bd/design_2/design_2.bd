@@ -108,7 +108,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "100000000",
+                "value": "25000000",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -192,7 +192,7 @@
                 "value_src": "constant"
               },
               "FREQ_HZ": {
-                "value": "100000000",
+                "value": "25000000",
                 "value_src": "ip_prop"
               },
               "PHASE": {
@@ -260,11 +260,23 @@
         "inst_hier_path": "clk_wiz_0",
         "has_run_ip_tcl": "true",
         "parameters": {
+          "CLKOUT1_JITTER": {
+            "value": "148.007"
+          },
+          "CLKOUT1_PHASE_ERROR": {
+            "value": "84.520"
+          },
+          "CLKOUT1_REQUESTED_OUT_FREQ": {
+            "value": "25"
+          },
           "CLKOUT2_JITTER": {
-            "value": "115.831"
+            "value": "107.502"
           },
           "CLKOUT2_PHASE_ERROR": {
-            "value": "87.180"
+            "value": "84.520"
+          },
+          "CLKOUT2_REQUESTED_OUT_FREQ": {
+            "value": "125"
           },
           "CLKOUT2_USED": {
             "value": "true"
@@ -278,14 +290,23 @@
           "CLK_OUT2_PORT": {
             "value": "Clk_125MHz"
           },
+          "MMCM_CLKFBOUT_MULT_F": {
+            "value": "12.500"
+          },
+          "MMCM_CLKOUT0_DIVIDE_F": {
+            "value": "50.000"
+          },
           "MMCM_CLKOUT1_DIVIDE": {
-            "value": "12"
+            "value": "10"
           },
           "NUM_OUT_CLKS": {
             "value": "2"
           },
           "PRIM_SOURCE": {
             "value": "Differential_clock_capable_pin"
+          },
+          "USE_RESET": {
+            "value": "false"
           }
         }
       }

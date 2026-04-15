@@ -16,10 +16,10 @@ entity pong_core is
     );
     port (
         clk        : in  std_logic;
-        reset      : in  std_logic;--reset gry
-        tick       : in  std_logic;
-        move_left  : in  std_logic;
-        move_right : in  std_logic;
+        reset      : in  std_logic; -- reset gry
+        tick       : in  std_logic; -- tempo animacji piłki
+        move_left  : in  std_logic; -- sygnał z enkodera
+        move_right : in  std_logic; -- sygnał z enkodera
 
         ball_x     : out integer range 0 to FIELD_W-1;
         ball_y     : out integer range 0 to FIELD_H-1;
@@ -35,7 +35,7 @@ architecture Behavioral of pong_core is
     signal dx : integer range -1 to 1 := 1;
     signal dy : integer range -1 to 1 := -1;
 begin
--- wystawienie wartości z rejestrów wewnętrznych na porty wyjściowe modułu
+    -- wystawienie wartości na porty wyjściowe
     ball_x   <= ball_x_reg;
     ball_y   <= ball_y_reg;
     paddle_x <= paddle_x_reg;
@@ -51,54 +51,59 @@ begin
                 ball_x_reg   <= FIELD_W/2;
                 ball_y_reg   <= FIELD_H/2;
                 paddle_x_reg <= (FIELD_W - PADDLE_W)/2;
-                -- początkowo ruch piłki prawo i do góry
                 dx <= 1;
                 dy <= -1;
-
-            elsif tick = '1' then
-
+            else
+                -- 1. STEROWANIE PALETKĄ (sprawdzane w każdym cyklu zegara, poza blokiem tick)
+                -- Dzięki temu nie przegapimy krótkich impulsów z enkodera
                 if move_left = '1' and paddle_x_reg > 0 then
                     paddle_x_reg <= paddle_x_reg - 1;
                 elsif move_right = '1' and paddle_x_reg < FIELD_W - PADDLE_W then
                     paddle_x_reg <= paddle_x_reg + 1;
                 end if;
 
-                next_x := ball_x_reg + dx;-- wyznaczenie kolejnej pozycji piłki w osi X
-                next_y := ball_y_reg + dy;-- wyznaczenie kolejnej pozycji piłki w osi Y
-                new_dx := dx;-- zachowaj kierunek X
-                new_dy := dy;-- zachowaj kierunek Y
+                -- 2. LOGIKA PIŁKI (wykonywana tylko gdy tick = '1')
+                if tick = '1' then
+                    next_x := ball_x_reg + dx;
+                    next_y := ball_y_reg + dy;
+                    new_dx := dx;
+                    new_dy := dy;
 
-                if next_x <= 0 then --kolizja z lewą ścianą
-                    new_dx := 1;--dalszy ruch w prawo
-                elsif next_x >= FIELD_W - 1 then--kolizja z prawą ścianą
-                    new_dx := -1; -- dalszy ruch w lewo
-                end if;
-
-                if next_y <= 0 then -- kolizja z górną ścianą
-                    new_dy := 1; --  dalszy ruch w dół
-                end if;
-                -- sprawdzenie, czy piłka dochodzi do linii paletki podczas ruchu w dół
-                if next_y = PADDLE_Y and new_dy = 1 then  
-                -- sprawdzenie, czy piłka trafia w obszar paletki
-                    if next_x >= paddle_x_reg and next_x < paddle_x_reg + PADDLE_W then
-                        new_dy := -1; -- odbicie od paletki: ruch w górę
+                    -- Kolizje ze ścianami bocznymi
+                    if next_x <= 0 then 
+                        new_dx := 1;
+                    elsif next_x >= FIELD_W - 1 then
+                        new_dx := -1;
                     end if;
-                end if;
-                -- sprawdzenie, czy piłka spadła poniżej obszaru gry
-                if next_y >= FIELD_H - 1 then
-                    ball_x_reg <= FIELD_W/2; -- restart pozycji piłki w osi X
-                    ball_y_reg <= FIELD_H/2; -- restart pozycji piłki w osi Y
-                    dx <= 1; -- przywrócenie początkowego kierunku X
-                    dy <= -1;
-                else
-                -- zapis nowej pozycji piłki
-                    ball_x_reg <= ball_x_reg + new_dx;
-                    ball_y_reg <= ball_y_reg + new_dy;
-                    dx <= new_dx;
-                    dy <= new_dy;
-                end if;
-            end if;
-        end if;
+
+                    -- Kolizja z górną ścianą
+                    if next_y <= 0 then 
+                        new_dy := 1;
+                    end if;
+
+                    -- Kolizja z paletką
+                    if next_y = PADDLE_Y and dy = 1 then  
+                        if next_x >= paddle_x_reg and next_x < paddle_x_reg + PADDLE_W then
+                            new_dy := -1;
+                        end if;
+                    end if;
+
+                    -- Sprawdzenie wypadnięcia piłki (dół ekranu)
+                    if next_y >= FIELD_H - 1 then
+                        ball_x_reg <= FIELD_W/2;
+                        ball_y_reg <= FIELD_H/2;
+                        dx <= 1;
+                        dy <= -1;
+                    else
+                        -- Aktualizacja stanu piłki
+                        ball_x_reg <= ball_x_reg + new_dx;
+                        ball_y_reg <= ball_y_reg + new_dy;
+                        dx <= new_dx;
+                        dy <= new_dy;
+                    end if;
+                end if; -- koniec bloku tick
+            end if; -- koniec bloku reset
+        end if; -- koniec rising_edge
     end process;
 
 end Behavioral;

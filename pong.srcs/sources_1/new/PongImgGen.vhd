@@ -125,36 +125,23 @@ begin
     inside_border <= '1' when
         (px_x < 2 or px_x >= 638 or px_y < 2 or px_y >= 478)
         else '0';
--- proces generujący kolor bieżącego piksela
-    process(DE, inside_ball, inside_paddle, inside_border)
-    begin
-        -- tło czarne
-        R <= (others => '0');
-        G <= (others => '0');
-        B <= (others => '0');
---obiekty tylko w aktywnym obszarze wyświetlania
-        if DE = '1' then
-            -- ramka
-            if inside_border = '1' then
-                R <= x"00";
-                G <= x"20";
-                B <= x"80";
-            end if;
+-- poprawiony proces generujący kolor bieżącego piksela
+process(DE, inside_ball, inside_paddle, inside_border)
+begin
+    -- Domyślnie tło czarne
+    R <= (others => '0');
+    G <= (others => '0');
+    B <= (others => '0');
 
-            -- paletka
-            if inside_paddle = '1' then
-                R <= x"00";
-                G <= x"FF";
-                B <= x"00";
-            end if;
-
-            -- piłka
-            if inside_ball = '1' then
-                R <= x"FF";
-                G <= x"FF";
-                B <= x"FF";
-            end if;
+    if DE = '1' then
+        if inside_ball = '1' then
+            R <= x"FF"; G <= x"FF"; B <= x"FF"; -- Piłka: Biała
+        elsif inside_paddle = '1' then
+            R <= x"00"; G <= x"FF"; B <= x"00"; -- Paletka: Zielona
+        elsif inside_border = '1' then
+            R <= x"00"; G <= x"20"; B <= x"80"; -- Ramka: Niebieska
         end if;
-    end process;
+    end if;
+end process;
 
 end architecture;
